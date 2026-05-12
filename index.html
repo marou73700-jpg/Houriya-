@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Houriya — Un souffle d'Égypte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --sand:      #c9a96e;
+      --sand-light:#e8d5b0;
+      --sand-pale: #f5ede0;
+      --ocean:     #1a4a6b;
+      --ocean-mid: #2e6e96;
+      --ocean-light:#5ba3c9;
+      --ocean-pale: #d6eaf5;
+      --indigo:    #2d2d7a;
+      --white:     #fdfaf6;
+      --text-dark: #1a1a2e;
+      --text-mid:  #3a3a5c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 80px;
+      background: rgba(253, 250, 246, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+      transition: all 0.4s ease;
+    }
+
+    nav.scrolled {
+      height: 64px;
+      box-shadow: 0 4px 30px rgba(26, 74, 107, 0.1);
+    }
+
+    .nav-logo img {
+      height: 56px;
+      transition: height 0.4s;
+    }
+    nav.scrolled .nav-logo img { height: 44px; }
+
+    .star-logo {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: block;
+    }
+
+    .star-core  { animation: starPulse 5s ease-in-out infinite; transform-origin: center; }
+    .star-ray   { animation: rayFade  5s ease-in-out infinite; transform-origin: center; }
+    .star-ray2  { animation: rayFade  5s ease-in-out infinite 0.8s; transform-origin: center; }
+    .star-halo  { animation: haloGlow 5s ease-in-out infinite; transform-origin: center; }
+    .star-halo2 { animation: haloGlow 5s ease-in-out infinite 0.6s; transform-origin: center; }
+
+    @keyframes starPulse {
+      0%,100% { opacity:0.6; transform: scale(0.88); }
+      40%     { opacity:1;   transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(160,220,255,1)); }
+      60%     { opacity:1;   transform: scale(1.15); }
+    }
+    @keyframes rayFade {
+      0%,100% { opacity:0.4;  transform: scaleY(0.85); }
+      40%     { opacity:1;    transform: scaleY(1.1); }
+      60%     { opacity:0.95; transform: scaleY(1.08); }
+    }
+    @keyframes haloGlow {
+      0%,100% { opacity:0.2; transform: scale(0.85); }
+      40%     { opacity:1;   transform: scale(1.18); }
+      60%     { opacity:0.9; transform: scale(1.14); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, var(--sand), var(--ocean-mid));
+      transition: width 0.4s ease;
+    }
+
+    .nav-links a:hover { color: var(--ocean); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--ocean); }
+
+    /* ===== HERO — DÉSERT ===== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-title-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      letter-spacing: 0.08em;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-subtitle-main {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.75rem, 1.8vw, 1.1rem);
+      letter-spacing: 0.35em;
+      color: var(--sand-light);
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10, 20, 40, 0.25) 0%,
+        rgba(10, 20, 40, 0.45) 50%,
+        rgba(10, 20, 40, 0.65) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 860px;
+      animation: fadeUp 1.2s 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      letter-spacing: 0.3em;
+      color: var(--sand-light);
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .hero-poem {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+      font-style: italic;
+      font-weight: 300;
+      color: white;
+      line-height: 1.7;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    .hero-poem strong {
+      font-style: normal;
+      font-weight: 500;
+      color: var(--sand-light);
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: inline-block;
+      padding: 0.9rem 2.8rem;
+      border: 1px solid var(--sand-light);
+      color: var(--sand-light);
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sand);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+      z-index: -1;
+    }
+
+    .hero-cta:hover {
+      color: var(--text-dark);
+      border-color: var(--sand);
+    }
+    .hero-cta:hover::before { transform: scaleX(1); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeUp 1.5s 1.5s ease both;
+    }
+
+    .scroll-hint span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.15); }
+    }
+
+    /* ===== SÉPARATEUR VAGUE ===== */
+    .wave-separator {
+      position: relative;
+      height: 80px;
+      overflow: hidden;
+    }
+
+    .wave-separator svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* ===== SECTION GÉNÉRIQUE ===== */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ===== INTRO DOUBLE UNIVERS ===== */
+    .intro {
+      background: var(--white);
+      text-align: center;
+    }
+
+    .intro-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      color: var(--sand);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--ocean);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .intro-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--sand), var(--ocean-mid));
+      margin: 0 auto 2rem;
+    }
+
+    .intro p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-style: italic;
+      color: var(--text-mid);
+      line-height: 1.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* ===== SPLIT SECTIONS MER & DÉSERT ===== */
+    .split-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .split-image {
+      position: relative;
+      overflow: hidden;
+      min-height: 500px;
+    }
+
+    .split-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.8s ease;
+      display: block;
+    }
+
+    .split-section:hover .split-image img { transform: scale(1.04); }
+
+    .split-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 5rem;
+    }
+
+    .split-content.ocean-bg {
+      background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-mid) 100%);
+      color: white;
+    }
+
+    .split-content.desert-bg {
+      background: linear-gradient(135deg, var(--sand-pale) 0%, #ede0cc 100%);
+      color: var(--text-dark);
+    }
+
+    .split-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      opacity: 0.7;
+    }
+
+    .split-content.ocean-bg .split-eyebrow { color: var(--sand-light); }
+    .split-content.desert-bg .split-eyebrow { color: var(--sand); }
+
+    .split-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .split-content.ocean-bg h2 { color: white; }
+    .split-content.desert-bg h2 { color: var(--ocean); }
+
+    .split-divider {
+      width: 40px;
+      height: 1px;
+      margin-bottom: 1.5rem;
+    }
+
+    .split-content.ocean-bg .split-divider { background: var(--sand-light); }
+    .split-content.desert-bg .split-divider { background: var(--sand); }
+
+    .split-content p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .split-content.ocean-bg p { color: rgba(255,255,255,0.85); }
+    .split-content.desert-bg p { color: var(--text-mid); }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2.2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.35s ease;
+      align-self: flex-start;
+    }
+
+    .btn-light {
+      border: 1px solid rgba(255,255,255,0.6);
+      color: white;
+    }
+
+    .btn-light:hover {
+      background: white;
+      color: var(--ocean);
+      border-color: white;
+    }
+
+    .btn-ocean {
+      border: 1px solid var(--ocean);
+      color: var(--ocean);
+    }
+
+    .btn-ocean:hover {
+      background: var(--ocean);
+      color: white;
+    }
+
+    /* ===== SECTION VIDÉO ===== */
+    .video-section {
+      background: var(--ocean);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-section video {
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(26, 74, 107, 0.35) 0%,
+        rgba(26, 74, 107, 0.1) 50%,
+        rgba(26, 74, 107, 0.5) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-caption {
+      text-align: center;
+      color: white;
+    }
+
+    .video-caption p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-style: italic;
+      font-weight: 300;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    }
+
+    /* Placeholder si pas de vidéo */
+    .video-placeholder {
+      background: linear-gradient(135deg, #0d2d44, #1a4a6b, #2e6e96);
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.5rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .video-placeholder .play-icon {
+      width: 72px; height: 72px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .video-placeholder .play-icon:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+      transform: scale(1.1);
+    }
+
+    /* ===== SÉJOURS ===== */
+    .sejours {
+      background: var(--sand-pale);
+    }
+
+    .sejours-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .sejours-header .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      color: var(--sand);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .sejours-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--ocean);
+    }
+
+    .sejours-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .sejour-card {
+      background: white;
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(26, 74, 107, 0.08);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .sejour-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 50px rgba(26, 74, 107, 0.15);
+    }
+
+    .sejour-img {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+    }
+
+    .sejour-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .sejour-card:hover .sejour-img img { transform: scale(1.07); }
+
+    .sejour-tag {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: rgba(26, 74, 107, 0.85);
+      color: white;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      padding: 0.35rem 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .sejour-body {
+      padding: 2rem;
+    }
+
+    .sejour-lieu {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--sand);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .sejour-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--ocean);
+      margin-bottom: 0.4rem;
+    }
+
+    .sejour-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--text-mid);
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+
+    .sejour-date {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .sejour-list {
+      list-style: none;
+      margin-bottom: 1.8rem;
+      display: inline-block;
+      text-align: left;
+    }
+
+    .sejour-list li {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .sejour-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--sand);
+    }
+
+    .sejour-collab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1rem;
+      background: var(--ocean-pale);
+      margin-bottom: 1.5rem;
+      border-radius: 2px;
+    }
+
+    .sejour-collab img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sejour-collab span {
+      font-size: 0.8rem;
+      color: var(--ocean);
+      line-height: 1.4;
+    }
+
+    .btn-card {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 0.8rem;
+      background: var(--indigo);
+      color: white;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .btn-card:hover { background: var(--ocean); }
+
+    /* ===== CONTACT ===== */
+    .contact {
+      background: white;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid rgba(201, 169, 110, 0.2);
+    }
+
+    .contact-photo {
+      overflow: hidden;
+    }
+
+    .contact-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .contact-info {
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--ocean-pale);
+    }
+
+    .contact-info .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      color: var(--sand);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--ocean);
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--sand);
+      margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-detail a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--ocean);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: color 0.3s;
+    }
+
+    .contact-detail a:hover { color: var(--sand); }
+
+    .contact-detail .icon {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(46, 110, 150, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .contact-note {
+      margin-top: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 40px; height: 40px;
+      background: var(--ocean);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    .social-link:hover { background: var(--sand); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--ocean);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+    }
+
+    footer span { color: var(--sand-light); }
+
+    /* ===== ANIMATIONS AU SCROLL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* stagger */
+    .reveal:nth-child(2) { transition-delay: 0.15s; }
+    .reveal:nth-child(3) { transition-delay: 0.3s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .nav-links a { font-size: 0.62rem; }
+
+      .split-section { grid-template-columns: 1fr; }
+      .split-section.reverse .split-image { order: -1; }
+      .split-image { height: 50vw; min-height: 280px; }
+      .split-content { padding: 3rem 2rem; }
+
+      .sejours-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-photo img { min-height: 280px; }
+      .contact-info { padding: 2.5rem 2rem; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      section { padding: 4rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <a href="#accueil">
+        <svg class="star-logo" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="width:58px;height:58px;">
+          <defs>
+            <radialGradient id="bigHalo" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#a8dcff" stop-opacity="0.7"/>
+              <stop offset="35%"  stop-color="#5ab8ff" stop-opacity="0.35"/>
+              <stop offset="70%"  stop-color="#1a6aaa" stop-opacity="0.1"/>
+              <stop offset="100%" stop-color="#0a2a44" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="midHalo" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="white"   stop-opacity="0.95"/>
+              <stop offset="30%"  stop-color="#c8eaff" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#4a9edd" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="rayGrad" cx="50%" cy="0%" r="100%">
+              <stop offset="0%"   stop-color="white"      stop-opacity="1"/>
+              <stop offset="100%" stop-color="#a0d4ff"    stop-opacity="0"/>
+            </radialGradient>
+            <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="rayGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="1.2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Grand halo extérieur diffus -->
+          <circle class="star-halo" cx="40" cy="40" r="38" fill="url(#bigHalo)"/>
+          <!-- Halo moyen -->
+          <circle class="star-halo2" cx="40" cy="40" r="20" fill="url(#midHalo)"/>
+
+          <!-- Rayon vertical -->
+          <polygon class="star-ray" filter="url(#rayGlow)"
+            points="40,2 42.5,40 40,78 37.5,40"
+            fill="white" opacity="0.9"/>
+          <!-- Rayon horizontal -->
+          <polygon class="star-ray" filter="url(#rayGlow)"
+            points="2,40 40,37.5 78,40 40,42.5"
+            fill="white" opacity="0.9"/>
+          <!-- Rayon diagonal fin 1 -->
+          <polygon class="star-ray2"
+            points="40,18 41.2,40 40,62 38.8,40"
+            transform="rotate(45 40 40)"
+            fill="white" opacity="0.45"/>
+          <!-- Rayon diagonal fin 2 -->
+          <polygon class="star-ray2"
+            points="40,18 41.2,40 40,62 38.8,40"
+            transform="rotate(-45 40 40)"
+            fill="white" opacity="0.45"/>
+
+          <!-- Cœur blanc pur -->
+          <circle class="star-core" cx="40" cy="40" r="5.5" fill="url(#midHalo)" filter="url(#softGlow)"/>
+          <circle cx="40" cy="40" r="2.8" fill="white"/>
+        </svg>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#accueil" class="active">ACCUEIL</a></li>
+      <li><a href="#mer">UNIVERS MER</a></li>
+      <li><a href="#desert">UNIVERS DÉSERT</a></li>
+      <li><a href="#sejours">NOS SÉJOURS</a></li>
+      <li><a href="#approche">NOTRE APPROCHE &amp; QUI SOMMES NOUS</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="accueil" class="hero" style="padding:0;">
+    <div style="position:absolute; inset:0; width:100%; height:100%; overflow:hidden; pointer-events:none;">
+      <iframe
+        src="https://www.youtube.com/embed/shpc0kHFWIs?autoplay=1&mute=1&loop=1&playlist=shpc0kHFWIs&controls=0&showinfo=0&rel=0&modestbranding=1"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+        style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:177.78vh; min-width:100%; height:56.25vw; min-height:100%; pointer-events:none;">
+      </iframe>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title-main">Houriya</h1>
+      <div class="hero-wave-line">
+        <svg viewBox="0 0 200 24" xmlns="http://www.w3.org/2000/svg" style="width:180px;height:22px;display:block;margin:0.6rem auto;">
+          <path d="M0,12 C25,2 50,22 75,12 C100,2 125,22 150,12 C175,2 195,18 200,12"
+                fill="none" stroke="rgba(232,213,176,0.85)" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <p class="hero-subtitle-main">Un souffle d'Égypte</p>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO sous la vidéo ===== -->
+  <section class="intro" style="position:relative; overflow:hidden;">
+    <div style="position:absolute; inset:0; z-index:0;">
+      <img src="temple-1.jpg" alt=""
+           style="position:absolute; left:0; top:0; width:50%; height:100%; object-fit:cover; opacity:0.15;"
+           onerror="this.style.display='none'"/>
+      <img src="temple.jpg" alt=""
+           style="position:absolute; right:0; top:0; width:50%; height:100%; object-fit:cover; opacity:0.15;"
+           onerror="this.style.display='none'"/>
+    </div>
+    <div class="section-inner" style="position:relative; z-index:1;">
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,5vw,3.8rem); font-weight:300; color:var(--ocean); margin-bottom:1.2rem; font-style:italic; line-height:1.15;">
+        Découvrir l'Égypte
+      </h2>
+      <div class="intro-divider reveal"></div>
+      <p class="reveal" style="margin-bottom:2.5rem; font-size:clamp(1rem,1.8vw,1.3rem);">
+        entre deux immensités —<br>
+        Là où la rencontre avec soi rejoint naturellement<br>
+        la rencontre avec le monde,<br>
+        <em>dans la splendeur du vivant.</em>
+      </p>
+      <a href="#sejours" class="hero-cta reveal" style="display:inline-block; color:var(--ocean); border-color:var(--ocean);">Découvrir nos séjours</a>
+    </div>
+  </section>
+
+  <!-- ===== MER & DAUPHINS ===== -->
+  <div id="mer" class="split-section">
+    <div class="split-image reveal-left">
+      <!-- Image dauphin en apnée -->
+      <img src="dauphins-presentation-accueil.jpg"
+           alt="Apnée avec les dauphins à Sataya"
+           onerror="this.style.background='linear-gradient(135deg,#1a4a6b,#2e6e96)'; this.src=''" />
+    </div>
+    <div class="split-content ocean-bg reveal-right">
+      <span class="split-eyebrow">Univers Mer</span>
+      <h2>Les dauphins &amp;<br>le Souffle conscient</h2>
+      <div class="split-divider"></div>
+      <p>
+        Être enseigné·e par les dauphins —<br>
+        le lagon de Sataya et ses récifs foisonnants,<br>
+        respirer et voyager avec le son,<br>
+        s'initier ou approfondir l'apnée<br>
+        et son système intérieur (IFS).
+      </p>
+      <a href="#sataya" class="btn btn-light">Univers mer</a>
+    </div>
+  </div>
+
+  <!-- ===== DÉSERT ===== -->
+  <div id="desert" class="split-section reverse">
+    <div class="split-content desert-bg reveal-left">
+      <span class="split-eyebrow">Univers Désert</span>
+      <h2>Le désert &amp;<br>l'écho de l'eau</h2>
+      <div class="split-divider"></div>
+      <p>
+        Une immersion dans la beauté du désert blanc,<br>
+        marcher et contempler.<br>
+        Voyage sonore sous le ciel étoilé.<br>
+        Fayoum, la vallée des baleines,<br>
+        Black Desert &amp; Cristal Mountain,<br>
+        White Desert &amp; Djara Cave.
+      </p>
+      <a href="#sejours" class="btn btn-ocean">Univers désert</a>
+    </div>
+    <div class="split-image reveal-right">
+      <img src="desert-presentation-accueil.jpg"
+           alt="Désert blanc d'Égypte"
+           onerror="this.style.background='linear-gradient(135deg,#c9a96e,#e8d5b0)'; this.src=''" />
+    </div>
+  </div>
+
+  <!-- ===== NOS SÉJOURS ===== -->
+  <section id="sejours" class="sejours">
+    <div class="section-inner" style="position:relative; z-index:1;">
+      <div class="sejours-header">
+        <p class="section-eyebrow reveal">Décembre 2026</p>
+        <h2 class="reveal">Nos séjours</h2>
+      </div>
+
+      <div class="sejours-grid">
+
+        <!-- Séjour 1 — Désert blanc -->
+        <div class="sejour-card reveal">
+          <div class="sejour-img">
+            <img src="sejour-27nov-3dec.jpg" alt="Le désert blanc — L'écho de l'eau" />
+          </div>
+          <div class="sejour-body" style="text-align:center;">
+            <p class="sejour-lieu">Le désert blanc</p>
+            <h3>"L'écho de l'eau"</h3>
+            <p class="sejour-date">29 novembre — 4 décembre 2026</p>
+            <ul class="sejour-list">
+              <li>Fayoum et la vallée des baleines</li>
+              <li>Black desert &amp; Cristal mountain</li>
+              <li>Randonnée bivouac dans le désert blanc</li>
+              <li>Sources d'eau chaude et bain sonore à Djara cave</li>
+            </ul>
+            <div class="sejour-collab">
+              <img src="logo-jordane.jpg" alt="Jordane Saunal" onerror="this.style.display='none'"/>
+              <span>En collaboration avec<br><strong>Jordane Saunal</strong>, sonothérapeute</span>
+            </div>
+            <a href="https://jordanesaunal-sonotherapie.com/" class="btn-card">Découvrir ce séjour</a>
+          </div>
+        </div>
+
+        <!-- Séjour 2 — Sataya Mer -->
+        <div class="sejour-card reveal">
+          <div class="sejour-img">
+            <img src="sejour-5-12-decembre.JPG" alt="Sataya — Le chant de l'eau" />
+          </div>
+          <div class="sejour-body" style="text-align:center;">
+            <p class="sejour-lieu">Sataya</p>
+            <h3>"Le chant de l'eau"</h3>
+            <p class="sejour-date">5 décembre — 12 décembre 2026</p>
+            <ul class="sejour-list">
+              <li>Nager avec les dauphins libres</li>
+              <li>Explorer les récifs</li>
+              <li>Voyager avec le son</li>
+              <li>S'initier ou approfondir l'apnée</li>
+            </ul>
+            <div class="sejour-collab">
+              <img src="logo-jordane.jpg" alt="Jordane Saunal" onerror="this.style.display='none'"/>
+              <span>En collaboration avec<br><strong>Jordane Saunal</strong>, sonothérapeute</span>
+            </div>
+            <a href="#contact" class="btn-card">Découvrir ce séjour</a>
+          </div>
+        </div>
+
+        <!-- Séjour 3 — Apnée & IFS -->
+        <div class="sejour-card reveal">
+          <div class="sejour-img" style="overflow:hidden;">
+            <img src="sejour-12-19-decembre.JPG" alt="Sataya — Apnée et liberté"
+                 style="object-position: center 15%;" />
+          </div>
+          <div class="sejour-body" style="text-align:center;">
+            <p class="sejour-lieu">Sataya</p>
+            <h3>"Apnée et liberté"</h3>
+            <p class="sejour-quote">séjour IFS — Internal Family Systems</p>
+            <p class="sejour-date">12 décembre — 19 décembre 2026</p>
+            <ul class="sejour-list">
+              <li>Baigner dans l'énergie du Self</li>
+              <li>L'apnée méditative</li>
+              <li>S'inspirer des dauphins</li>
+              <li>Respirer</li>
+            </ul>
+            <div class="sejour-collab">
+              <span style="font-size:0.8rem; color:var(--ocean);">En collaboration avec<br><strong>Alice</strong>, praticienne IFS</span>
+            </div>
+            <a href="#contact" class="btn-card">Découvrir ce séjour</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="contact" style="padding:0;">
+    <div class="section-inner" style="max-width:100%;">
+      <div class="contact-grid">
+        <div class="contact-photo" style="background:var(--sand-pale); display:flex; align-items:center; justify-content:center;">
+          <img src="logo-houriya.png" alt="L'équipe Houriya"
+               style="width:340px; height:340px; object-fit:contain;"
+               onerror="this.style.display='none';" />
+        </div>
+        <div class="contact-info" style="text-align:center; align-items:center;">
+          <p class="section-eyebrow">Renseignements &amp; inscriptions</p>
+          <h2>Nous contacter</h2>
+          <div class="contact-divider" style="margin:0 auto;"></div>
+          <div class="contact-detail" style="justify-content:center;">
+            <a href="mailto:info@houriya-egypt.com" style="justify-content:center;">
+              <span class="icon">✉</span>
+              info@houriya-egypt.com
+            </a>
+          </div>
+          <div class="contact-detail" style="justify-content:center;">
+            <a href="tel:+33603622820" style="justify-content:center;">
+              <span class="icon">✆</span>
+              +33 6 03 62 28 20
+            </a>
+          </div>
+          <div class="contact-note" style="display:flex; align-items:center; justify-content:center; gap:1.2rem; margin-top:1.5rem; padding:1.2rem 1.5rem; background:white; border-radius:2px; width:100%; white-space:nowrap;">
+            <img src="logo-covoyage-sacre.jpeg" alt="Covoyage Sacré"
+                 style="width:56px; height:56px; object-fit:contain; border-radius:50%; flex-shrink:0;"
+                 onerror="this.style.display='none'" />
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-style:italic; color:var(--text-mid); line-height:1.6; margin:0; white-space:nowrap;">
+              Séjour opéré en collaboration avec l'agence <strong style="font-style:normal; color:var(--ocean);">Covoyage Sacré</strong> et sous sa licence.
+            </p>
+          </div>
+          <div class="social-row" style="justify-content:center;">
+            <a href="https://www.facebook.com/share/17pY3dXzrr/?mibextid=wwXIfr"
+               target="_blank" rel="noopener" class="social-link" aria-label="Facebook"
+               style="font-family:serif; font-weight:bold; font-size:1rem;">f</a>
+            <a href="https://www.instagram.com/houriya_unsouffledegypte?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+               target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="white">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <span>Houriya</span> — Un souffle d'Égypte &nbsp;·&nbsp; info@houriya-egypt.com &nbsp;·&nbsp; +33 6 03 62 28 20
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Nav scrolled
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>
