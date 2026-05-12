@@ -126,12 +126,37 @@
     /* ===== HERO — DÉSERT ===== */
     .hero {
       position: relative;
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
       height: 100vh;
       min-height: 600px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .hero-video-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-video-bg iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: 56.25vw;          /* 16:9 — hauteur basée sur largeur */
+      min-height: 100vh;
+      min-width: 177.78vh;      /* 16:9 — largeur basée sur hauteur */
+      border: 0;
+      pointer-events: none;
     }
 
     .hero-title-main {
@@ -961,14 +986,12 @@
 
   <!-- ===== HERO ===== -->
   <section id="accueil" class="hero" style="padding:0;">
-    <div style="position:absolute; inset:0; width:100%; height:100%; overflow:hidden; pointer-events:none;">
+    <div class="hero-video-bg">
       <iframe
-        src="https://www.youtube.com/embed/shpc0kHFWIs?autoplay=1&mute=1&loop=1&playlist=shpc0kHFWIs&controls=0&showinfo=0&rel=0&modestbranding=1"
+        src="https://www.youtube.com/embed/shpc0kHFWIs?autoplay=1&mute=1&loop=1&playlist=shpc0kHFWIs&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
         frameborder="0"
         allow="autoplay; fullscreen"
-        allowfullscreen
-        style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:177.78vh; min-width:100%; height:56.25vw; min-height:100%; pointer-events:none;">
-      </iframe>
+        allowfullscreen></iframe>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
