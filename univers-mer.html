@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Univers Mer — Houriya, Un souffle d'Égypte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --ocean-deep:  #061e30;
+      --ocean:       #0d3550;
+      --ocean-mid:   #1a6090;
+      --ocean-light: #4a9ec9;
+      --ocean-pale:  #d0eaf8;
+      --turquoise:   #00c4b4;
+      --sand:        #c9a96e;
+      --sand-light:  #e8d5b0;
+      --white:       #fdfaf6;
+      --text-dark:   #0a1a2e;
+      --text-mid:    #2a4a6a;
+      --indigo:      #2d2d7a;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family:'Lato',sans-serif; background:var(--white); color:var(--text-dark); overflow-x:hidden; }
+
+    /* ===== NAV ===== */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 3rem; height:72px;
+      background:rgba(6,30,48,0.88);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(74,158,201,0.15);
+      transition:all 0.4s;
+    }
+    nav.scrolled { height:58px; }
+
+    .nav-star { display:flex; align-items:center; }
+    .nav-star svg { width:44px; height:44px; }
+    .star-core  { animation:starPulse 5s ease-in-out infinite; transform-origin:center; }
+    .star-ray   { animation:rayFade  5s ease-in-out infinite; transform-origin:center; }
+    .star-ray2  { animation:rayFade  5s ease-in-out infinite 0.8s; transform-origin:center; }
+    .star-halo  { animation:haloGlow 5s ease-in-out infinite; transform-origin:center; }
+    .star-halo2 { animation:haloGlow 5s ease-in-out infinite 0.6s; transform-origin:center; }
+    @keyframes starPulse { 0%,100%{opacity:.6;transform:scale(.88)} 40%{opacity:1;transform:scale(1.18);filter:drop-shadow(0 0 10px rgba(160,220,255,1))} 60%{opacity:1;transform:scale(1.15)} }
+    @keyframes rayFade   { 0%,100%{opacity:.4;transform:scaleY(.85)} 40%{opacity:1;transform:scaleY(1.1)} 60%{opacity:.95;transform:scaleY(1.08)} }
+    @keyframes haloGlow  { 0%,100%{opacity:.2;transform:scale(.85)} 40%{opacity:1;transform:scale(1.18)} 60%{opacity:.9;transform:scale(1.14)} }
+
+    .nav-links { display:flex; gap:2.2rem; list-style:none; }
+    .nav-links a {
+      text-decoration:none; font-family:'Cinzel',serif; font-size:0.72rem;
+      letter-spacing:0.18em; color:rgba(255,255,255,0.7); text-transform:uppercase;
+      position:relative; padding-bottom:3px; transition:color 0.3s;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:0; left:0; width:0; height:1px;
+      background:linear-gradient(90deg,var(--sand),var(--ocean-light));
+      transition:width 0.4s;
+    }
+    .nav-links a:hover, .nav-links a.active { color:white; }
+    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+
+    /* ===== HERO VIDÉO ===== */
+    .hero {
+      position:relative; height:100vh; min-height:580px; overflow:hidden;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .hero video {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; object-position:center;
+    }
+    .hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to bottom, rgba(6,30,48,.3) 0%, rgba(6,30,48,.5) 60%, rgba(6,30,48,.85) 100%);
+    }
+    .hero-content {
+      position:relative; text-align:center; padding:0 2rem;
+      animation:fadeUp 1.2s 0.5s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-eyebrow {
+      font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.35em;
+      color:var(--sand-light); text-transform:uppercase; margin-bottom:1.5rem;
+    }
+    .hero h1 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,8vw,6.5rem);
+      font-weight:300; font-style:italic; color:white;
+      text-shadow:0 2px 40px rgba(0,100,180,.5); line-height:1.1; margin-bottom:1rem;
+    }
+    .hero-wave {
+      display:block; margin:1rem auto 1.5rem;
+    }
+    .hero-tagline {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,2.5vw,1.6rem);
+      font-style:italic; font-weight:300; color:rgba(255,255,255,.85);
+      line-height:1.7; max-width:600px; margin:0 auto 2.5rem;
+    }
+    .scroll-hint {
+      position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:.5rem;
+      animation:fadeUp 1.5s 1.8s ease both;
+    }
+    .scroll-line { width:1px; height:50px; background:linear-gradient(to bottom,rgba(255,255,255,.5),transparent); animation:scrollPulse 2s infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    /* ===== SECTION SATAYA — PRÉSENTATION ===== */
+    .sataya-intro {
+      position:relative; overflow:hidden;
+      background:linear-gradient(180deg, var(--ocean-deep) 0%, #0a3050 100%);
+      padding:8rem 2rem;
+      text-align:center; color:white;
+    }
+    .sataya-intro::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:120px;
+      background:linear-gradient(to bottom, rgba(6,30,48,0.85), transparent);
+    }
+    .sataya-bg-img {
+      position:absolute; inset:0; opacity:.18;
+      background-image:url('sataya-vue-ciel.webp');
+      background-size:cover; background-position:center;
+    }
+    .sataya-intro .section-inner { position:relative; max-width:800px; margin:0 auto; }
+    .sataya-intro h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,5vw,4rem);
+      font-style:italic; font-weight:300; margin-bottom:1.5rem;
+      background:linear-gradient(135deg,white,var(--sand-light));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .sataya-intro .divider {
+      width:50px; height:1px; background:var(--sand); margin:0 auto 2.5rem;
+    }
+    .sataya-intro p {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,2vw,1.4rem);
+      font-style:italic; line-height:2; color:rgba(255,255,255,.85);
+      margin-bottom:1.4rem;
+    }
+    .sataya-intro p strong { color:var(--sand-light); font-style:normal; }
+
+    /* Vue aérienne Sataya */
+    .sataya-aerial {
+      position:relative; height:480px; overflow:hidden;
+    }
+    .sataya-aerial img {
+      width:100%; height:100%; object-fit:cover; object-position:center;
+      transform:scale(1.04); transition:transform 8s ease;
+    }
+    .sataya-aerial:hover img { transform:scale(1); }
+    .sataya-aerial-caption {
+      position:absolute; bottom:0; left:0; right:0;
+      background:linear-gradient(to top, rgba(6,30,48,.9), transparent);
+      padding:3rem 2rem 2rem; text-align:center;
+    }
+    .sataya-aerial-caption p {
+      font-family:'Cormorant Garamond',serif; font-size:1.3rem;
+      font-style:italic; color:rgba(255,255,255,.9);
+    }
+
+    /* ===== SECTIONS ALTERNÉES ===== */
+    .alt-section { display:grid; grid-template-columns:1fr 1fr; min-height:520px; }
+    .alt-section.reverse .alt-img { order:2; }
+    .alt-section.reverse .alt-content { order:1; }
+
+    .alt-img { position:relative; overflow:hidden; }
+    .alt-img img { width:100%; height:100%; object-fit:cover; transition:transform .8s ease; }
+    .alt-section:hover .alt-img img { transform:scale(1.04); }
+
+    .alt-content {
+      display:flex; flex-direction:column; justify-content:center;
+      padding:4rem 5rem;
+    }
+    .alt-content.dark { background:var(--ocean-deep); color:white; }
+    .alt-content.light { background:var(--ocean-pale); color:var(--text-dark); }
+    .alt-content.mid  { background:var(--ocean); color:white; }
+
+    .alt-eyebrow {
+      font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.3em;
+      text-transform:uppercase; margin-bottom:1.2rem;
+    }
+    .alt-content.dark  .alt-eyebrow { color:var(--sand-light); }
+    .alt-content.light .alt-eyebrow { color:var(--sand); }
+    .alt-content.mid   .alt-eyebrow { color:var(--sand-light); }
+
+    .alt-content h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3vw,2.8rem);
+      font-style:italic; font-weight:300; line-height:1.2; margin-bottom:1.2rem;
+    }
+    .alt-content.dark  h2 { color:white; }
+    .alt-content.light h2 { color:var(--ocean); }
+    .alt-content.mid   h2 { color:white; }
+
+    .alt-divider { width:40px; height:1px; margin-bottom:1.5rem; }
+    .alt-content.dark  .alt-divider { background:var(--sand-light); }
+    .alt-content.light .alt-divider { background:var(--sand); }
+    .alt-content.mid   .alt-divider { background:rgba(255,255,255,.5); }
+
+    .alt-content p {
+      font-family:'Cormorant Garamond',serif; font-size:1.15rem;
+      line-height:1.9; margin-bottom:1rem;
+    }
+    .alt-content.dark  p { color:rgba(255,255,255,.82); }
+    .alt-content.light p { color:var(--text-mid); }
+    .alt-content.mid   p { color:rgba(255,255,255,.85); }
+    .alt-content p em { font-style:italic; }
+    .alt-content p strong { font-weight:500; }
+
+    /* ===== GALERIE CORAUX ===== */
+    .coral-gallery {
+      background:var(--ocean-deep);
+      padding:6rem 2rem;
+    }
+    .coral-gallery h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem);
+      font-style:italic; font-weight:300; color:white;
+      text-align:center; margin-bottom:3rem;
+    }
+    .coral-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;
+      max-width:1200px; margin:0 auto;
+    }
+    .coral-grid img {
+      width:100%; aspect-ratio:4/3; object-fit:cover;
+      transition:transform .5s ease, filter .5s ease;
+      filter:saturate(.9);
+    }
+    .coral-grid img:hover { transform:scale(1.03); filter:saturate(1.3); }
+    .coral-grid .wide { grid-column:span 2; }
+
+    /* ===== APNÉE ===== */
+    .apnee-section {
+      background:linear-gradient(135deg, #061e30 0%, #0a3050 60%, #061e30 100%);
+      padding:8rem 2rem; text-align:center; color:white; position:relative; overflow:hidden;
+    }
+    .apnee-section::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at 50% 50%, rgba(74,158,201,.1) 0%, transparent 70%);
+    }
+    .apnee-inner { position:relative; max-width:900px; margin:0 auto; }
+    .apnee-section h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem);
+      font-style:italic; font-weight:300; margin-bottom:1rem;
+      color:white;
+    }
+    .apnee-section .divider { width:50px; height:1px; background:var(--sand); margin:1.5rem auto 2.5rem; }
+    .apnee-section p {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,2vw,1.35rem);
+      font-style:italic; line-height:2; color:rgba(255,255,255,.85); margin-bottom:1.2rem;
+    }
+    .apnee-section .highlight {
+      color:var(--sand-light); font-style:normal; font-weight:500;
+    }
+    .apnee-qualities {
+      display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;
+      margin:2.5rem auto; max-width:700px;
+    }
+    .apnee-qualities span {
+      font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.2em;
+      padding:.5rem 1.2rem; border:1px solid rgba(201,169,110,.4);
+      color:var(--sand-light); text-transform:uppercase;
+      transition:all .3s;
+    }
+    .apnee-qualities span:hover { background:rgba(201,169,110,.15); border-color:var(--sand); }
+
+    /* ===== VIDÉO RÉCIFS ===== */
+    .recifs-video {
+      position:relative; background:var(--ocean-deep);
+    }
+    .recifs-video video { width:100%; max-height:580px; object-fit:cover; display:block; }
+    .recifs-video-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to bottom, rgba(6,30,48,.4) 0%, rgba(6,30,48,.1) 50%, rgba(6,30,48,.5) 100%);
+      display:flex; align-items:flex-end; justify-content:center; padding-bottom:3rem;
+    }
+    .recifs-video-overlay p {
+      font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-style:italic;
+      color:rgba(255,255,255,.9); text-align:center;
+      text-shadow:0 2px 20px rgba(0,0,0,.5);
+    }
+
+    /* ===== IFS ===== */
+    .ifs-section {
+      display:grid; grid-template-columns:1fr 1fr; min-height:500px;
+    }
+    .ifs-img { position:relative; overflow:hidden; background:var(--ocean-deep); }
+    .ifs-img img { width:100%; height:100%; object-fit:cover; object-position:center; opacity:.9; }
+    .ifs-content {
+      background:linear-gradient(135deg, var(--indigo) 0%, #1a1a5a 100%);
+      color:white; padding:5rem;
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    .ifs-content .eyebrow {
+      font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.3em;
+      color:var(--sand-light); text-transform:uppercase; margin-bottom:1.2rem;
+    }
+    .ifs-content h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3vw,2.8rem);
+      font-style:italic; font-weight:300; color:white; margin-bottom:1rem;
+    }
+    .ifs-divider { width:40px; height:1px; background:var(--sand); margin-bottom:2rem; }
+    .ifs-content p {
+      font-family:'Cormorant Garamond',serif; font-size:1.15rem;
+      line-height:1.9; color:rgba(255,255,255,.85); margin-bottom:1rem; font-style:italic;
+    }
+    .ifs-8 {
+      display:grid; grid-template-columns:repeat(2,1fr); gap:.6rem; margin-top:1.5rem;
+    }
+    .ifs-8 span {
+      font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.15em;
+      color:var(--sand-light); padding:.4rem .8rem;
+      border-left:2px solid rgba(201,169,110,.4);
+    }
+
+    /* ===== BATEAU ALIA SOUL ===== */
+    .alia-hero {
+      position:relative; height:70vh; min-height:480px; overflow:hidden;
+    }
+    .alia-hero img {
+      width:100%; height:100%; object-fit:cover; object-position:center;
+    }
+    .alia-hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to bottom, transparent 30%, rgba(6,30,48,.85) 100%);
+      display:flex; align-items:flex-end; justify-content:center; padding-bottom:4rem;
+    }
+    .alia-hero-overlay h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,6vw,5rem);
+      font-style:italic; font-weight:300; color:white;
+      text-shadow:0 2px 30px rgba(0,0,0,.4); text-align:center;
+    }
+
+    .alia-content {
+      background:var(--ocean-deep); padding:6rem 2rem; color:white;
+    }
+    .alia-inner { max-width:1100px; margin:0 auto; }
+    .alia-intro { text-align:center; max-width:700px; margin:0 auto 5rem; }
+    .alia-intro h3 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,3vw,2.2rem);
+      font-style:italic; font-weight:300; color:var(--sand-light); margin-bottom:1rem;
+    }
+    .alia-intro p {
+      font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-style:italic;
+      line-height:1.9; color:rgba(255,255,255,.8);
+    }
+    .alia-gallery {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:4rem;
+    }
+    .alia-gallery img {
+      width:100%; aspect-ratio:4/3; object-fit:cover;
+      transition:transform .5s, filter .5s; filter:brightness(.9);
+    }
+    .alia-gallery img:hover { transform:scale(1.03); filter:brightness(1.05); }
+    .alia-gallery .alia-wide { grid-column:span 2; aspect-ratio:16/7; }
+
+    .alia-features {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:2rem;
+      border-top:1px solid rgba(201,169,110,.2); padding-top:3rem;
+    }
+    .alia-feature { text-align:center; }
+    .alia-feature .icon {
+      font-size:1.6rem; margin-bottom:.8rem; display:block;
+    }
+    .alia-feature h4 {
+      font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.2em;
+      color:var(--sand-light); text-transform:uppercase; margin-bottom:.5rem;
+    }
+    .alia-feature p {
+      font-family:'Cormorant Garamond',serif; font-size:1rem;
+      font-style:italic; color:rgba(255,255,255,.7); line-height:1.6;
+    }
+
+    /* ===== TARIFS ===== */
+    .tarifs {
+      background:var(--white); padding:7rem 2rem;
+    }
+    .tarifs-inner { max-width:1000px; margin:0 auto; }
+    .tarifs-header { text-align:center; margin-bottom:4rem; }
+    .tarifs-header .eyebrow {
+      font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.3em;
+      color:var(--sand); text-transform:uppercase; margin-bottom:1rem;
+    }
+    .tarifs-header h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem);
+      font-style:italic; font-weight:300; color:var(--ocean);
+    }
+    .tarifs-header .sub {
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      color:var(--text-mid); font-size:1.1rem; margin-top:.5rem;
+    }
+    .tarifs-grid { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
+    .tarif-card {
+      text-align:center;
+      border:1px solid rgba(26,96,144,.15);
+      padding:3rem; position:relative; overflow:hidden;
+      transition:box-shadow .4s, transform .4s;
+    }
+    .tarif-card:hover { box-shadow:0 16px 50px rgba(26,96,144,.12); transform:translateY(-4px); }
+    .tarif-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, var(--ocean-mid), var(--sand));
+    }
+    .tarif-title {
+      font-family:'Cormorant Garamond',serif; font-size:1.6rem;
+      font-style:italic; color:var(--ocean); margin-bottom:.3rem;
+    }
+    .tarif-dates {
+      font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.15em;
+      color:var(--sand); margin-bottom:1.5rem;
+    }
+    .tarif-price {
+      font-family:'Cormorant Garamond',serif; font-size:2.5rem;
+      font-weight:300; color:var(--ocean); margin-bottom:.3rem;
+    }
+    .tarif-price span { font-size:1rem; color:var(--text-mid); }
+    .tarif-note { font-size:.85rem; color:var(--text-mid); margin-bottom:1.5rem; font-style:italic; }
+    .tarif-divider { height:1px; background:rgba(26,96,144,.1); margin:1.5rem 0; }
+    .tarif-includes h4 {
+      font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.2em;
+      text-transform:uppercase; color:var(--ocean); margin-bottom:1rem;
+    }
+    .tarif-includes ul { list-style:none; }
+    .tarif-includes li {
+      font-size:.9rem; color:var(--text-mid); padding:.35rem 0 .35rem 1.2rem;
+      position:relative; border-bottom:1px solid rgba(26,96,144,.06);
+    }
+    .tarif-includes li::before { content:'—'; position:absolute; left:0; color:var(--sand); }
+    .tarif-includes li.neg::before { content:'×'; color:rgba(200,80,80,.6); }
+    .tarif-btn {
+      display:block; width:100%; text-align:center; margin-top:2rem;
+      padding:.9rem; background:var(--ocean); color:white;
+      font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.2em;
+      text-transform:uppercase; text-decoration:none; transition:background .3s;
+    }
+    .tarif-btn:hover { background:var(--ocean-mid); }
+
+    /* ===== CONTACT CTA ===== */
+    .cta-band {
+      background:linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean) 100%);
+      padding:6rem 2rem; text-align:center;
+    }
+    .cta-band h2 {
+      font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,4vw,3rem);
+      font-style:italic; font-weight:300; color:white; margin-bottom:1.5rem;
+    }
+    .cta-band p {
+      font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-style:italic;
+      color:rgba(255,255,255,.8); margin-bottom:2.5rem;
+    }
+    .cta-links { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; }
+    .cta-btn {
+      padding:.9rem 2.5rem; font-family:'Cinzel',serif; font-size:.72rem;
+      letter-spacing:.2em; text-transform:uppercase; text-decoration:none; transition:all .35s;
+    }
+    .cta-btn.primary { background:var(--sand); color:var(--ocean-deep); }
+    .cta-btn.primary:hover { background:var(--sand-light); }
+    .cta-btn.secondary { border:1px solid rgba(255,255,255,.5); color:white; }
+    .cta-btn.secondary:hover { background:rgba(255,255,255,.1); border-color:white; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background:var(--ocean-deep); color:rgba(255,255,255,.4);
+      text-align:center; padding:2rem;
+      font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em;
+    }
+    footer a { color:var(--sand-light); text-decoration:none; }
+
+    /* ===== REVEAL ===== */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .9s ease, transform .9s ease; }
+    .reveal-left.visible { opacity:1; transform:translateX(0); }
+    .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .9s ease, transform .9s ease; }
+    .reveal-right.visible { opacity:1; transform:translateX(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:900px) {
+      nav { padding:0 1.5rem; }
+      .nav-links { gap:1.2rem; }
+      .alt-section, .ifs-section { grid-template-columns:1fr; }
+      .alt-section.reverse .alt-img { order:0; }
+      .alt-img { height:50vw; min-height:260px; }
+      .alt-content { padding:3rem 2rem; }
+      .ifs-img { height:280px; }
+      .ifs-content { padding:3rem 2rem; }
+      .coral-grid { grid-template-columns:1fr 1fr; }
+      .coral-grid .wide { grid-column:span 1; }
+      .tarifs-grid { grid-template-columns:1fr; }
+      .alia-gallery { grid-template-columns:1fr; }
+      .alia-gallery .alia-wide { grid-column:span 1; aspect-ratio:4/3; }
+      .alia-features { grid-template-columns:repeat(2,1fr); }
+      .ifs-8 { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:600px) {
+      .nav-links { display:none; }
+      .hero h1 { font-size:3rem; }
+      .alia-features { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav id="navbar">
+    <div class="nav-star">
+      <a href="houriya-accueil.html">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="bigHalo" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#a8dcff" stop-opacity="0.7"/>
+              <stop offset="35%"  stop-color="#5ab8ff" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#0a2a44" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="midHalo" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="white"   stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#4a9edd" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle class="star-halo"  cx="40" cy="40" r="38" fill="url(#bigHalo)"/>
+          <circle class="star-halo2" cx="40" cy="40" r="20" fill="url(#midHalo)"/>
+          <polygon class="star-ray"  points="40,2 42.5,40 40,78 37.5,40" fill="white" opacity=".9"/>
+          <polygon class="star-ray"  points="2,40 40,37.5 78,40 40,42.5" fill="white" opacity=".9"/>
+          <polygon class="star-ray2" points="40,18 41.2,40 40,62 38.8,40" transform="rotate(45 40 40)" fill="white" opacity=".45"/>
+          <polygon class="star-ray2" points="40,18 41.2,40 40,62 38.8,40" transform="rotate(-45 40 40)" fill="white" opacity=".45"/>
+          <circle class="star-core"  cx="40" cy="40" r="5.5" fill="url(#midHalo)"/>
+          <circle cx="40" cy="40" r="2.8" fill="white"/>
+        </svg>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="houriya-accueil.html">Accueil</a></li>
+      <li><a href="#" class="active">Univers Mer</a></li>
+      <li><a href="#sataya">Sataya</a></li>
+      <li><a href="#apnee">L'Apnée</a></li>
+      <li><a href="#alia">Alia Soul</a></li>
+      <li><a href="#tarifs">Séjours</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== HERO VIDÉO ===== -->
+  <section class="hero">
+    <iframe
+      src="https://www.youtube.com/embed/fFXAGo4lOLQ?autoplay=1&mute=1&loop=1&playlist=fFXAGo4lOLQ&controls=0&showinfo=0&rel=0"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+    </iframe>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Houriya — Un souffle d'Égypte</p>
+      <h1>Univers Mer</h1>
+      <svg class="hero-wave" viewBox="0 0 240 20" xmlns="http://www.w3.org/2000/svg" width="200" height="18">
+        <path d="M0,10 C30,2 60,18 90,10 C120,2 150,18 180,10 C210,2 230,16 240,10"
+              fill="none" stroke="rgba(232,213,176,0.7)" stroke-width="1.2"/>
+      </svg>
+      <p class="hero-tagline">
+        Un bain dans l'énergie du Self
+      </p>
+    </div>
+    <div class="scroll-hint"><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- ===== SATAYA PRÉSENTATION ===== -->
+  <section id="sataya" class="sataya-intro">
+    <div class="sataya-bg-img"></div>
+    <div class="section-inner">
+      <h2 class="reveal">Plonger au cœur de Sataya</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Portée par la présence joyeuse des dauphins,<br>
+        Sataya invite à plonger autant dans les profondeurs de la mer,<br>
+        qu'au cœur de soi-même.</p>
+      <p class="reveal">La baie invite à respirer autrement, à ralentir<br>
+        et à se laisser porter par le silence enveloppant du bleu.</p>
+      <p class="reveal">Peu à peu l'esprit se calme, le corps se détend,<br>
+        et une connexion profonde s'installe — <strong>à soi, au souffle et au vivant.</strong></p>
+      <p class="reveal"><em>Une communion intime avec la mer,<br>
+        là où les frontières s'effacent,<br>
+        et où l'intériorité rencontre l'immensité de l'océan.</em></p>
+      <blockquote class="reveal" style="margin-top:2.5rem; padding:1.8rem 2.5rem; border-left:3px solid var(--sand); background:rgba(255,255,255,0.06); font-family:'Cormorant Garamond',serif; font-size:clamp(1.05rem,1.8vw,1.25rem); font-style:italic; color:rgba(255,255,255,0.9); line-height:1.8;">
+        « Une telle détente du corps et de l'esprit ouvre naturellement les portes d'un espace thérapeutique profond, amplifié par la présence des dauphins. »
+        <cite style="display:block; margin-top:.8rem; font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; color:var(--sand-light); font-style:normal;">— Covoyage Sacré</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Vue aérienne — recadrée vers le lagon turquoise -->
+  <div class="sataya-aerial">
+    <img src="baie-de-sataya.jpg" alt="La baie de Sataya vue du ciel"
+         style="object-position: center 70%;"
+         onerror="this.style.background='linear-gradient(135deg,#0d3550,#00c4b4)';this.removeAttribute('src')"/>
+    <div class="sataya-aerial-caption">
+      <p>L'écrin de douceur de la baie de Sataya</p>
+    </div>
+  </div>
+
+  <!-- ===== DAUPHINS LIBRES ===== -->
+  <div class="alt-section" id="dauphins">
+    <div class="alt-img reveal-left">
+      <img src="nage-dauphin-1.jpg" alt="Nager avec les dauphins libres"
+           onerror="this.style.background='linear-gradient(135deg,#0d3550,#1a6090)';this.removeAttribute('src')"/>
+    </div>
+    <div class="alt-content dark reveal-right">
+      <span class="alt-eyebrow">Les dauphins libres</span>
+      <h2>Nager avec les dauphins libres</h2>
+      <div class="alt-divider"></div>
+      <p>Rencontrer les dauphins est une expérience touchante.</p>
+      <p>Dès le lever du jour, se réveiller puis glisser à l'eau avec eux. Entrer dans leur monde, baigné par la lumière douce du matin.</p>
+      <p>Les observer jouer — ou partager un instant de nage à leurs côtés, à la surface ou en apnée.</p>
+      <p><em>Il n'est pas nécessaire d'être un·e grand·e nageur·se : leur curiosité et leur générosité viennent à la rencontre de chacun.</em></p>
+    </div>
+  </div>
+
+  <!-- Dauphins côté texte -->
+  <div class="alt-section reverse">
+    <div class="alt-img reveal-right">
+      <img src="dauphin-2.jpg" alt="Dauphins en liberté"
+           onerror="this.style.background='linear-gradient(135deg,#1a6090,#4a9ec9)';this.removeAttribute('src')"/>
+    </div>
+    <div class="alt-content mid reveal-left">
+      <span class="alt-eyebrow">Joie &amp; Ouverture</span>
+      <h2>Joie et Inspiration<br><em style="font-size:.7em;color:rgba(255,255,255,.7);">&amp; Ouverture du Cœur</em></h2>
+      <div class="alt-divider"></div>
+      <p>La rencontre avec les dauphins éveille une joie simple. Ils nous rappellent la grâce d'être là, simplement.</p>
+      <p>Jouer sans raison. Habiter pleinement l'instant.</p>
+      <p>Cliquetis, sifflements, vibrations qui traversent l'eau et résonnent dans le corps — les dauphins parlent une langue sensorielle, qui nous rappelle que la communication dépasse les mots.</p>
+      <p><em>On ne les écoute pas seulement avec les oreilles, mais avec la peau, avec le cœur.</em></p>
+    </div>
+  </div>
+
+  <!-- ===== GALERIE RÉCIFS ===== -->
+  <div class="coral-gallery">
+    <h2 class="reveal">Les récifs foisonnants</h2>
+    <div class="coral-grid" style="grid-template-columns:repeat(3,1fr); gap:0.8rem;">
+      <img src="marou-recifs.jpg" alt="Marou récifs"
+           style="aspect-ratio:4/3; object-fit:cover; width:100%;"
+           onerror="this.style.background='linear-gradient(135deg,#1a6090,#4a9ec9)';this.removeAttribute('src')"/>
+      <img src="coraux-1.jpg" alt="Coraux"
+           style="aspect-ratio:4/3; object-fit:cover; width:100%;"
+           onerror="this.style.background='linear-gradient(135deg,#0a3050,#00c4b4)';this.removeAttribute('src')"/>
+      <img src="dauphin-3.jpg" alt="Dauphin"
+           style="aspect-ratio:4/3; object-fit:cover; width:100%;"
+           onerror="this.style.background='linear-gradient(135deg,#0d3550,#1a6090)';this.removeAttribute('src')"/>
+      <img src="dahab-1.jpg" alt="Dahab récifs"
+           style="aspect-ratio:4/3; object-fit:cover; width:100%;"
+           onerror="this.style.background='linear-gradient(135deg,#061e30,#1a6090)';this.removeAttribute('src')"/>
+      <img src="ras-mohamed.jpg" alt="Ras Mohamed"
+           style="aspect-ratio:4/3; object-fit:cover; width:100%;"
+           onerror="this.style.background='linear-gradient(135deg,#061e30,#00c4b4)';this.removeAttribute('src')"/>
+      <img src="dahab-2.jpg" alt="Dahab"
+           style="aspect-ratio:4/3; object-fit:cover; width:100%;"
+           onerror="this.style.background='linear-gradient(135deg,#0d3550,#4a9ec9)';this.removeAttribute('src')"/>
+    </div>
+  </div>
+
+  <!-- ===== APNÉE & IFS FUSIONNÉS ===== -->
+  <section id="apnee" class="apnee-section">
+    <div class="apnee-inner">
+      <p class="reveal" style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.3em;color:var(--sand);text-transform:uppercase;margin-bottom:1rem;">Voyage intérieur</p>
+      <h2 class="reveal">L'Apnée &amp; l'Immensité en Soi</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Ici, l'apnée, loin de toute recherche de performance, devient un espace de présence et de contemplation pour <span class="highlight">habiter pleinement l'instant.</span></p>
+      <p class="reveal">Je m'appuie sur l'espace du Self pour découvrir l'apnée — et sur l'apnée pour découvrir ses ressources intérieures. Plonger dans le souffle, c'est plonger dans la conscience.</p>
+      <p class="reveal"><em>Respirer, ressentir, ralentir.</em></p>
+    </div>
+  </section>
+
+  <!-- Photos apnée -->
+  <div class="alt-section">
+    <div class="alt-img reveal-left">
+      <img src="plonger-ou-voler.jpg" alt="Plonger ou voler"
+           onerror="this.style.background='linear-gradient(135deg,#061e30,#1a6090)';this.removeAttribute('src')"/>
+    </div>
+    <div class="alt-img reveal-right">
+      <img src="lumiere-sous-eau.jpg" alt="Lumière sous l'eau"
+           onerror="this.style.background='linear-gradient(135deg,#0a3050,#4a9ec9)';this.removeAttribute('src')"/>
+    </div>
+  </div>
+
+  <!-- IFS — section horizontale plein écran avec IFS.jpg en arrière-plan -->
+  <div id="ifs" style="position:relative; overflow:hidden; padding:7rem 2rem; text-align:center;">
+    <div style="position:absolute; inset:0; background-image:url('IFS.jpg'); background-size:cover; background-position:center; opacity:0.55;"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(6,30,48,0.65) 0%, rgba(13,53,80,0.70) 100%);"></div>
+    <div style="position:relative; z-index:1; max-width:860px; margin:0 auto; color:white;">
+      <span class="reveal" style="font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.3em; color:var(--sand-light); text-transform:uppercase; display:block; margin-bottom:1.2rem;">Vers l'immensité en soi</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); font-style:italic; font-weight:300; color:white; margin-bottom:.5rem;">L'approche IFS</h2>
+      <p class="reveal" style="font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.22em; color:var(--sand-light); margin-bottom:2rem;">Internal Family Systems</p>
+      <div style="width:50px; height:1px; background:var(--sand); margin:0 auto 2.5rem;"></div>
+      <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,2vw,1.3rem); font-style:italic; line-height:2; color:rgba(255,255,255,.9); margin-bottom:1.5rem;">Formée à l'IFS, j'accompagne ces explorations en m'appuyant sur l'espace du Self — ce centre intérieur présent en chacun de nous, naturellement calme, curieux, et bienveillant.</p>
+      <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,2vw,1.3rem); font-style:italic; line-height:2; color:rgba(255,255,255,.9); margin-bottom:1.5rem;">L'apnée devient alors un chemin vers cet espace intérieur, vaste et vivant comme la mer. Sous l'eau, dans le silence et la suspension du souffle, les qualités du Self émergent naturellement : présence, confiance, clarté, compassion.</p>
+      <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,2vw,1.3rem); font-style:italic; line-height:2; color:var(--sand-light); margin-bottom:2.5rem;">Plonger devient une manière de revenir à soi, d'habiter pleinement son souffle, son corps, ses profondeurs.</p>
+    </div>
+  </div>
+
+  <!-- ===== VIDÉO RÉCIFS ===== -->
+  <div class="recifs-video">
+    <div style="position:relative; width:100%; max-height:580px; overflow:hidden; background:#061e30;">
+      <iframe
+        src="https://www.youtube.com/embed/95nXJfAOvzk?autoplay=1&mute=1&loop=1&playlist=95nXJfAOvzk&controls=0&showinfo=0&rel=0"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+        style="width:100%; height:580px; display:block; pointer-events:none;">
+      </iframe>
+    </div>
+    <div class="recifs-video-overlay">
+      <p>La beauté de Sataya</p>
+    </div>
+  </div>
+
+  <!-- ===== ALIA SOUL — BATEAU ===== -->
+  <section id="alia">
+    <div class="alia-hero" style="background-image:url('alia-soul.webp'); background-size:cover; background-position:center;">
+      <div class="alia-hero-overlay">
+        <h2>Le bateau Alia Soul</h2>
+      </div>
+    </div>
+    <div class="alia-content">
+      <div class="alia-inner">
+        <div class="alia-intro reveal">
+          <h3>À bord du Alia Soul</h3>
+          <p>Une semaine en mer, portée par le confort et la douceur d'un bateau pensé pour le repos et le bien-être. À bord d'Alia Soul : une cuisine fraîche et généreuse, un équipage attentif et expérimenté, des cabines spacieuses et des espaces baignés de lumière. Bienvenue à bord.</p>
+          <p style="margin-top:1rem; font-style:italic; color:var(--sand-light);">Avec le bateau Alia Soul, en partenariat avec l'agence Covoyage Sacré.</p>
+        </div>
+        <div class="alia-gallery" style="grid-template-columns:repeat(3,1fr);">
+          <img src="alia-soul-saloon.webp" alt="Salon intérieur"
+               onerror="this.style.background='linear-gradient(135deg,#1a6090,#0a3050)';this.removeAttribute('src')"/>
+          <img src="alia-soul-saloon-outside.webp" alt="Salon extérieur"
+               onerror="this.style.background='linear-gradient(135deg,#0a3050,#4a9ec9)';this.removeAttribute('src')"/>
+          <img src="alia-soul-bed.jpeg" alt="Lit cabine"
+               onerror="this.style.background='linear-gradient(135deg,#0d3550,#1a6090)';this.removeAttribute('src')"/>
+          <img src="alia-soul-bedroom.webp" alt="Cabine"
+               onerror="this.style.background='linear-gradient(135deg,#061e30,#0d3550)';this.removeAttribute('src')"/>
+          <img src="alia-soul-shower.webp" alt="Salle de bain"
+               onerror="this.style.background='linear-gradient(135deg,#061e30,#0a3050)';this.removeAttribute('src')"/>
+          <img src="alia-soul-5.webp" alt="Alia Soul"
+               onerror="this.style.background='linear-gradient(135deg,#0d3550,#4a9ec9)';this.removeAttribute('src')"/>
+        </div>
+        <div class="alia-features reveal">
+          <div class="alia-feature">
+            <span class="icon">🛏</span>
+            <h4>10 cabines doubles</h4>
+            <p>Cabines doubles à partager · Cabine sur le pont : +100€</p>
+          </div>
+          <div class="alia-feature">
+            <span class="icon">🍽</span>
+            <h4>Pension complète</h4>
+            <p>Nourriture fraîche et généreuse, encas et boissons à bord</p>
+          </div>
+          <div class="alia-feature">
+            <span class="icon">⚓</span>
+            <h4>Départ depuis Hamata</h4>
+            <p>Mer Rouge, à proximité de la baie de Sataya</p>
+          </div>
+          <div class="alia-feature">
+            <span class="icon">🌊</span>
+            <h4>Équipage</h4>
+            <p>Équipage expérimenté et attentionné, à vos petits soins</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TARIFS ===== -->
+  <section id="tarifs" class="tarifs">
+    <div class="tarifs-inner">
+      <div class="tarifs-header">
+        <p class="eyebrow reveal">Décembre 2026</p>
+        <h2 class="reveal">Séjours Sataya</h2>
+        <p class="sub reveal">Avec le bateau Alia Soul, en partenariat avec l'agence locale</p>
+      </div>
+      <div class="tarifs-grid">
+        <!-- Séjour 1 -->
+        <div class="tarif-card reveal">
+          <div class="sejour-img-tarif">
+            <img src="sejour-5-12-decembre.JPG" alt="Le chant de l'eau"
+                 style="width:100%;height:320px;object-fit:cover;object-position:center;display:block;margin-bottom:1.5rem;"
+                 onerror="this.style.background='linear-gradient(135deg,#0d3550,#1a6090)';this.style.height='320px';this.style.display='block'"/>
+          </div>
+          <div class="tarif-title">"Le chant de l'eau"</div>
+          <div class="tarif-dates">5 décembre — 12 décembre 2026</div>
+          <div class="tarif-price">1 550 € <span>/ personne</span></div>
+          <div class="tarif-note">hors vols · 7 nuits / 6 jours</div>
+          <p style="font-size:.85rem;color:var(--text-mid);margin-bottom:1rem;">Prix adulte dès 12 ans · De 6 à 12 ans : 1 400€ · 0 à 5 ans : 1 200€</p>
+          <p style="font-size:.85rem;color:var(--text-mid);font-style:italic;margin-bottom:.5rem;">Groupe de 12 à 16 personnes max · cabines doubles à partager</p>
+          <div class="tarif-divider"></div>
+          <div class="tarif-includes">
+            <h4>Ce tarif comprend</h4>
+            <ul>
+              <li>Hébergement en croisière 7 nuits (cabine double)</li>
+              <li>Pension complète dès l'arrivée à Hamata</li>
+              <li>Repas généreux, encas, snack, boisson non alcoolisée</li>
+              <li>Transferts en bus A/R aéroport</li>
+              <li>Accompagnement du groupe tout au long du séjour</li>
+            </ul>
+            <h4 style="margin-top:1rem;">Non compris</h4>
+            <ul>
+              <li class="neg">Équipement snorkeling (palmes-masque-tuba, combinaisons)</li>
+              <li class="neg">Visa d'entrée en Égypte résidents UE (30€ sur place)</li>
+              <li class="neg">Droit d'accès à la baie de Sataya (100€/pers/semaine)</li>
+              <li class="neg">Pourboire fin de séjour (minimum recommandé 100€/pers)</li>
+              <li class="neg">Cabine sur le pont (+100€)</li>
+            </ul>
+          </div>
+          <a href="houriya-accueil.html#contact" class="tarif-btn">Réserver ce séjour</a>
+        </div>
+        <!-- Séjour 2 -->
+        <div class="tarif-card reveal">
+          <div class="sejour-img-tarif">
+            <img src="sejour-12-19-decembre.JPG" alt="Apnée et liberté"
+                 style="width:100%;height:320px;object-fit:cover;object-position:center 15%;display:block;margin-bottom:1.5rem;"
+                 onerror="this.style.background='linear-gradient(135deg,#0d3550,#1a6090)';this.style.height='320px';this.style.display='block'"/>
+          </div>
+          <div class="tarif-title">"Apnée et liberté"</div>
+          <div class="tarif-dates">12 décembre — 19 décembre 2026</div>
+          <div class="tarif-price">1 550 € <span>/ personne</span></div>
+          <div class="tarif-note">hors vols · 7 nuits / 6 jours · séjour IFS</div>
+          <p style="font-size:.85rem;color:var(--text-mid);font-style:italic;margin-bottom:.5rem;">Internal Family Systems — avec Alice, praticienne IFS</p>
+          <p style="font-size:.85rem;color:var(--text-mid);margin-bottom:.5rem;">Groupe de 12 à 16 personnes max · cabines doubles à partager</p>
+          <div class="tarif-divider"></div>
+          <div class="tarif-includes">
+            <h4>Ce tarif comprend</h4>
+            <ul>
+              <li>Hébergement en croisière 7 nuits (cabine double)</li>
+              <li>Pension complète dès l'arrivée à Hamata</li>
+              <li>Repas généreux, encas, snack, boisson non alcoolisée</li>
+              <li>Transferts en bus A/R aéroport</li>
+              <li>Accompagnement IFS &amp; apnée tout au long du séjour</li>
+            </ul>
+            <h4 style="margin-top:1rem;">Non compris</h4>
+            <ul>
+              <li class="neg">Équipement snorkeling (palmes-masque-tuba, combinaisons)</li>
+              <li class="neg">Visa d'entrée en Égypte résidents UE (30€ sur place)</li>
+              <li class="neg">Droit d'accès à la baie de Sataya (100€/pers/semaine)</li>
+              <li class="neg">Pourboire fin de séjour (minimum recommandé 100€/pers)</li>
+              <li class="neg">Cabine sur le pont (+100€)</li>
+            </ul>
+          </div>
+          <a href="houriya-accueil.html#contact" class="tarif-btn">Réserver ce séjour</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA CONTACT ===== -->
+  <div id="contact" class="cta-band" style="position:relative; overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:url('coraux.jpg');background-size:cover;background-position:center;opacity:0.55;"></div>
+    <div style="position:relative; z-index:1;">
+      <h2 class="reveal">Renseignements &amp; inscriptions</h2>
+      <p class="reveal">Séjour opéré en collaboration avec l'agence <strong>Covoyage Sacré</strong> et sous sa licence.</p>
+      <div class="cta-links">
+        <a href="mailto:info@houriya-egypt.com" class="cta-btn primary">info@houriya-egypt.com</a>
+        <a href="tel:+33603622820" class="cta-btn secondary">+33 6 03 62 28 20</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <a href="houriya-accueil.html">Houriya — Un souffle d'Égypte</a> &nbsp;·&nbsp; info@houriya-egypt.com &nbsp;·&nbsp; +33 6 03 62 28 20
+  </footer>
+
+  <script>
+    // Nav scrolled
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+    // Scroll reveal
+    const els = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(el => obs.observe(el));
+
+    // Nav active on scroll
+    const sections = document.querySelectorAll('section[id],div[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) cur = s.id; });
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+cur));
+    });
+  </script>
+</body>
+</html>
