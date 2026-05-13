@@ -123,7 +123,7 @@
     .nav-links a.active::after { width: 100%; }
     .nav-links a.active { color: var(--ocean); }
 
-    /* ===== HERO — vidéo en 16:9 propre dans la zone Webador ===== */
+    /* ===== HERO — 16:9 propre dans la zone Webador ===== */
     .hero {
       position: relative;
       width: 100%;
@@ -152,6 +152,20 @@
       border: 0;
       pointer-events: none;
     }
+
+    /* HAMBURGER MOBILE */
+    .nav-toggle {
+      display: none; background: transparent; border: 0; cursor: pointer;
+      padding: .5rem; flex-direction: column; gap: 5px;
+      width: 36px; height: 36px; justify-content: center; align-items: center;
+    }
+    .nav-toggle span {
+      display: block; width: 24px; height: 2px; background: var(--ocean);
+      transition: transform .35s, opacity .35s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     .hero-title-main {
       font-family: 'Cormorant Garamond', serif;
@@ -882,26 +896,54 @@
     .reveal:nth-child(3) { transition-delay: 0.3s; }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 900px) {
+    @media (max-width: 1024px) {
       nav { padding: 0 1.5rem; }
       .nav-links { gap: 1.5rem; }
-      .nav-links a { font-size: 0.62rem; }
+      .nav-links a { font-size: 0.7rem; letter-spacing:0.15em; }
+    }
+    @media (max-width: 900px) {
+      nav { padding: 0 1.2rem; }
+      .nav-toggle { display:flex; }
+      .nav-links {
+        position:fixed; top:80px; left:0; right:0;
+        background:rgba(253,250,246,0.98);
+        backdrop-filter:blur(14px);
+        flex-direction:column; gap:1.4rem;
+        padding:2rem 1.5rem 3rem;
+        border-bottom:1px solid rgba(201,169,110,0.2);
+        transform:translateY(-110%);
+        transition:transform .45s ease;
+        max-height:calc(100vh - 80px); overflow-y:auto;
+      }
+      nav.scrolled .nav-links { top:64px; max-height:calc(100vh - 64px); }
+      .nav-links.open { transform:translateY(0); }
+      .nav-links a { font-size:0.85rem; text-align:center; padding:.6rem 0; }
 
       .split-section { grid-template-columns: 1fr; }
       .split-section.reverse .split-image { order: -1; }
-      .split-image { height: 50vw; min-height: 280px; }
-      .split-content { padding: 3rem 2rem; }
+      .split-image { height: 60vw; min-height: 260px; }
+      .split-content { padding: 2.5rem 1.5rem; }
 
       .sejours-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
 
       .contact-grid { grid-template-columns: 1fr; }
       .contact-photo img { min-height: 280px; }
-      .contact-info { padding: 2.5rem 2rem; }
+      .contact-info { padding: 2.5rem 1.5rem; }
+
+      section { padding: 4rem 1.5rem; }
     }
 
     @media (max-width: 600px) {
-      .nav-links { display: none; }
-      section { padding: 4rem 1.2rem; }
+      .hero { aspect-ratio:auto; height:60vh; min-height:380px; }
+      .hero-title-main { font-size: 2.8rem; }
+      .hero-subtitle-main { font-size: 0.7rem; letter-spacing:0.3em; }
+      section { padding: 3.5rem 1.2rem; }
+      .split-content { padding: 2rem 1.2rem; }
+      .split-content p { font-size: 1rem; }
+      .sejour-body { padding: 1.5rem; }
+      .contact-info { padding: 2rem 1.2rem; }
+      .contact-note { flex-direction:column !important; text-align:center; white-space:normal !important; }
+      .contact-note p { white-space:normal !important; }
     }
   </style>
 </head>
@@ -968,6 +1010,9 @@
         </svg>
       </a>
     </div>
+    <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-links">
       <li><a href="#accueil" class="active">ACCUEIL</a></li>
       <li><a href="#mer">UNIVERS MER</a></li>
@@ -1246,6 +1291,24 @@
         a.classList.toggle('active', a.getAttribute('href') === '#' + current);
       });
     });
+
+    // Hamburger menu mobile
+    const navToggle = document.querySelector('.nav-toggle');
+    const navList   = document.querySelector('.nav-links');
+    if (navToggle && navList) {
+      navToggle.addEventListener('click', () => {
+        const open = navList.classList.toggle('open');
+        navToggle.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      navList.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navList.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
   </script>
 </body>
 </html>

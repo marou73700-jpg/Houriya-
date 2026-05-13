@@ -29,7 +29,7 @@
     html { scroll-behavior: smooth; }
     body { font-family:'Lato',sans-serif; background:var(--white); color:var(--text-dark); overflow-x:hidden; }
 
-    /* ===== NAV (identique page d'accueil) ===== */
+    /* ===== NAV (identique page accueil) ===== */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -44,17 +44,11 @@
       border-bottom: 1px solid rgba(201, 169, 110, 0.2);
       transition: all 0.4s ease;
     }
-    nav.scrolled {
-      height: 64px;
-      box-shadow: 0 4px 30px rgba(26, 74, 107, 0.1);
-    }
+    nav.scrolled { height: 64px; box-shadow: 0 4px 30px rgba(26,74,107,0.1); }
 
     .nav-logo { display:flex; align-items:center; }
     .nav-logo .star-logo {
-      width: 58px;
-      height: 58px;
-      cursor: pointer;
-      display: block;
+      width: 58px; height: 58px; cursor: pointer; display: block;
       transition: width 0.4s, height 0.4s;
     }
     nav.scrolled .nav-logo .star-logo { width:44px; height:44px; }
@@ -64,68 +58,56 @@
     .star-ray2  { animation: rayFade  5s ease-in-out infinite 0.8s; transform-origin: center; }
     .star-halo  { animation: haloGlow 5s ease-in-out infinite; transform-origin: center; }
     .star-halo2 { animation: haloGlow 5s ease-in-out infinite 0.6s; transform-origin: center; }
-    @keyframes starPulse {
-      0%,100% { opacity:0.6; transform: scale(0.88); }
-      40%     { opacity:1;   transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(160,220,255,1)); }
-      60%     { opacity:1;   transform: scale(1.15); }
-    }
-    @keyframes rayFade {
-      0%,100% { opacity:0.4;  transform: scaleY(0.85); }
-      40%     { opacity:1;    transform: scaleY(1.1); }
-      60%     { opacity:0.95; transform: scaleY(1.08); }
-    }
-    @keyframes haloGlow {
-      0%,100% { opacity:0.2; transform: scale(0.85); }
-      40%     { opacity:1;   transform: scale(1.18); }
-      60%     { opacity:0.9; transform: scale(1.14); }
-    }
+    @keyframes starPulse { 0%,100%{opacity:.6;transform:scale(.88)} 40%{opacity:1;transform:scale(1.18);filter:drop-shadow(0 0 10px rgba(160,220,255,1))} 60%{opacity:1;transform:scale(1.15)} }
+    @keyframes rayFade   { 0%,100%{opacity:.4;transform:scaleY(.85)} 40%{opacity:1;transform:scaleY(1.1)} 60%{opacity:.95;transform:scaleY(1.08)} }
+    @keyframes haloGlow  { 0%,100%{opacity:.2;transform:scale(.85)} 40%{opacity:1;transform:scale(1.18)} 60%{opacity:.9;transform:scale(1.14)} }
 
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
-      text-decoration: none;
-      font-family: 'Cinzel', serif;
-      font-size: 0.82rem;
-      letter-spacing: 0.18em;
-      color: var(--text-mid);
-      text-transform: uppercase;
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.3s;
+      text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.82rem;
+      letter-spacing: 0.18em; color: var(--text-mid); text-transform: uppercase;
+      position: relative; padding-bottom: 4px; transition: color 0.3s;
     }
     .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
+      content: ''; position: absolute; bottom: 0; left: 0;
       width: 0; height: 1px;
       background: linear-gradient(90deg, var(--sand), var(--ocean-mid));
       transition: width 0.4s ease;
     }
     .nav-links a:hover { color: var(--ocean); }
-    .nav-links a:hover::after,
-    .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a.active { color: var(--ocean); }
 
-    /* ===== HERO VIDÉO — 16:9 propre dans la zone de contenu Webador ===== */
+    /* HAMBURGER MOBILE */
+    .nav-toggle {
+      display: none; background: transparent; border: 0; cursor: pointer;
+      padding: .5rem; flex-direction: column; gap: 5px;
+      width: 36px; height: 36px; justify-content: center; align-items: center;
+    }
+    .nav-toggle span {
+      display: block; width: 24px; height: 2px; background: var(--ocean);
+      transition: transform .35s, opacity .35s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ===== HERO VIDÉO — 16:9 propre dans la zone Webador ===== */
     .hero {
-      position:relative;
-      width:100%;
+      position: relative;
+      width: 100%;
       aspect-ratio: 16 / 9;
-      min-height:400px;
-      max-height:100vh;
-      overflow:hidden;
-      display:flex; align-items:center; justify-content:center;
+      min-height: 400px;
+      max-height: 100vh;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
     }
     .hero video {
       position:absolute; inset:0; width:100%; height:100%;
       object-fit:cover; object-position:center;
     }
     .hero-video-bg {
-      position:absolute; top:0; left:0;
-      width:100%; height:100%;
+      position:absolute; top:0; left:0; width:100%; height:100%;
       overflow:hidden; pointer-events:none; z-index:0;
     }
     .hero-video-bg iframe {
@@ -133,17 +115,19 @@
       width:100%; height:100%;
       border:0; pointer-events:none;
     }
-    /* Vidéo récifs en 16:9 sans déformation */
+    /* Vidéo récifs en 16:9 propre, plafonnée pour ne pas être trop haute */
     .recifs-video-wrap {
-      position:relative; width:100%;
-      padding-bottom:56.25%;          /* ratio 16:9 */
-      height:0; overflow:hidden;
-      background:#061e30;
+      position: relative; width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 70vh;
+      overflow: hidden;
+      background: #061e30;
+      margin: 0 auto;
     }
     .recifs-video-wrap iframe {
-      position:absolute; top:0; left:0;
-      width:100%; height:100%;
-      border:0;
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
     }
     .hero-overlay {
       position:absolute; inset:0;
@@ -386,9 +370,16 @@
       border-left:2px solid rgba(201,169,110,.4);
     }
 
-    /* ===== BATEAU ALIA SOUL ===== */
+    /* ===== BATEAU ALIA SOUL — bandeau cinématographique 21:9 ===== */
     .alia-hero {
-      position:relative; height:70vh; min-height:480px; overflow:hidden;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      min-height: 320px;
+      max-height: 60vh;
+      overflow: hidden;
+      background-size: cover !important;
+      background-position: center !important;
     }
     .alia-hero img {
       width:100%; height:100%; object-fit:cover; object-position:center;
@@ -396,10 +387,10 @@
     .alia-hero-overlay {
       position:absolute; inset:0;
       background:linear-gradient(to bottom, transparent 30%, rgba(6,30,48,.85) 100%);
-      display:flex; align-items:flex-end; justify-content:center; padding-bottom:4rem;
+      display:flex; align-items:flex-end; justify-content:center; padding-bottom:3rem;
     }
     .alia-hero-overlay h2 {
-      font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,6vw,5rem);
+      font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,5vw,4rem);
       font-style:italic; font-weight:300; color:white;
       text-shadow:0 2px 30px rgba(0,0,0,.4); text-align:center;
     }
@@ -548,34 +539,69 @@
     .reveal-right.visible { opacity:1; transform:translateX(0); }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width:900px) {
+    @media (max-width:1024px) {
       nav { padding:0 1.5rem; }
-      .nav-links { gap:1.2rem; }
-      .nav-links a { font-size:0.62rem; }
+      .nav-links { gap:1.4rem; }
+      .nav-links a { font-size:0.68rem; letter-spacing:0.15em; }
+    }
+    @media (max-width:900px) {
+      nav { padding:0 1.2rem; }
+      .nav-toggle { display:flex; }
+      .nav-links {
+        position:fixed; top:80px; left:0; right:0;
+        background:rgba(253,250,246,0.98);
+        backdrop-filter:blur(14px);
+        flex-direction:column; gap:1.4rem;
+        padding:2rem 1.5rem 3rem;
+        border-bottom:1px solid rgba(201,169,110,0.2);
+        transform:translateY(-110%);
+        transition:transform .45s ease;
+        max-height:calc(100vh - 80px); overflow-y:auto;
+      }
+      nav.scrolled .nav-links { top:64px; max-height:calc(100vh - 64px); }
+      .nav-links.open { transform:translateY(0); }
+      .nav-links a { font-size:0.85rem; text-align:center; padding:.6rem 0; }
       .alt-section, .ifs-section { grid-template-columns:1fr; }
       .alt-section.reverse .alt-img { order:0; }
-      .alt-img { height:50vw; min-height:260px; }
-      .alt-content { padding:3rem 2rem; }
+      .alt-img { height:60vw; min-height:240px; }
+      .alt-content { padding:2.5rem 1.5rem; }
       .ifs-img { height:280px; }
-      .ifs-content { padding:3rem 2rem; }
-      .coral-grid { grid-template-columns:1fr 1fr; }
+      .ifs-content { padding:3rem 1.5rem; }
+      .coral-grid { grid-template-columns:1fr 1fr; gap:.6rem; }
       .coral-grid .wide { grid-column:span 1; }
       .tarifs-grid { grid-template-columns:1fr; }
-      .alia-gallery { grid-template-columns:1fr; }
-      .alia-gallery .alia-wide { grid-column:span 1; aspect-ratio:4/3; }
+      .alia-gallery { grid-template-columns:1fr 1fr; gap:.8rem; }
+      .alia-gallery .alia-wide { grid-column:span 2; aspect-ratio:16/9; }
       .alia-features { grid-template-columns:repeat(2,1fr); }
       .ifs-8 { grid-template-columns:repeat(2,1fr); }
+      .sataya-intro { padding:5rem 1.5rem; }
+      .apnee-section { padding:5rem 1.5rem; }
+      .coral-gallery { padding:4rem 1rem; }
+      .alia-content { padding:4rem 1.5rem; }
+      .tarifs { padding:5rem 1.5rem; }
+      .tarif-card { padding:2rem 1.5rem; }
+      .cta-band { padding:4rem 1.5rem; }
     }
     @media (max-width:600px) {
-      .nav-links { display:none; }
-      .hero h1 { font-size:3rem; }
-      .alia-features { grid-template-columns:1fr 1fr; }
+      .hero { aspect-ratio:auto; height:60vh; min-height:380px; }
+      .hero h1 { font-size:2.6rem; }
+      .alia-hero { aspect-ratio:4/3; min-height:280px; max-height:none; }
+      .alia-hero-overlay { padding-bottom:1.5rem; }
+      .alia-gallery { grid-template-columns:1fr; }
+      .alia-gallery .alia-wide { grid-column:span 1; aspect-ratio:16/9; }
+      .alia-features { grid-template-columns:1fr 1fr; gap:1.2rem; }
+      .coral-grid { grid-template-columns:1fr; }
+      .sataya-aerial { height:300px; }
+      .ifs-8 { grid-template-columns:1fr; }
+      .tarif-card { padding:1.8rem 1.2rem; }
+      .tarifs-grid { gap:1.5rem; }
+      .recifs-video-wrap { max-height:none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== NAV (identique page d'accueil) ===== -->
+  <!-- ===== NAV (identique accueil + hamburger mobile) ===== -->
   <nav id="navbar">
     <div class="nav-logo">
       <a href="index.html#accueil">
@@ -612,6 +638,9 @@
         </svg>
       </a>
     </div>
+    <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-links">
       <li><a href="index.html#accueil">ACCUEIL</a></li>
       <li><a href="#" class="active">UNIVERS MER</a></li>
@@ -964,6 +993,25 @@
       sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) cur = s.id; });
       links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+cur));
     });
+
+    // Hamburger menu mobile
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks  = document.querySelector('.nav-links');
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navToggle.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      // fermer auto au clic sur un lien
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
   </script>
 </body>
 </html>
