@@ -29,50 +29,94 @@
     html { scroll-behavior: smooth; }
     body { font-family:'Lato',sans-serif; background:var(--white); color:var(--text-dark); overflow-x:hidden; }
 
-    /* ===== NAV ===== */
+    /* ===== NAV (identique page d'accueil) ===== */
     nav {
-      position:fixed; top:0; left:0; right:0; z-index:100;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 3rem; height:72px;
-      background:rgba(6,30,48,0.88);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(74,158,201,0.15);
-      transition:all 0.4s;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 80px;
+      background: rgba(253, 250, 246, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+      transition: all 0.4s ease;
     }
-    nav.scrolled { height:58px; }
+    nav.scrolled {
+      height: 64px;
+      box-shadow: 0 4px 30px rgba(26, 74, 107, 0.1);
+    }
 
-    .nav-star { display:flex; align-items:center; }
-    .nav-star svg { width:44px; height:44px; }
-    .star-core  { animation:starPulse 5s ease-in-out infinite; transform-origin:center; }
-    .star-ray   { animation:rayFade  5s ease-in-out infinite; transform-origin:center; }
-    .star-ray2  { animation:rayFade  5s ease-in-out infinite 0.8s; transform-origin:center; }
-    .star-halo  { animation:haloGlow 5s ease-in-out infinite; transform-origin:center; }
-    .star-halo2 { animation:haloGlow 5s ease-in-out infinite 0.6s; transform-origin:center; }
-    @keyframes starPulse { 0%,100%{opacity:.6;transform:scale(.88)} 40%{opacity:1;transform:scale(1.18);filter:drop-shadow(0 0 10px rgba(160,220,255,1))} 60%{opacity:1;transform:scale(1.15)} }
-    @keyframes rayFade   { 0%,100%{opacity:.4;transform:scaleY(.85)} 40%{opacity:1;transform:scaleY(1.1)} 60%{opacity:.95;transform:scaleY(1.08)} }
-    @keyframes haloGlow  { 0%,100%{opacity:.2;transform:scale(.85)} 40%{opacity:1;transform:scale(1.18)} 60%{opacity:.9;transform:scale(1.14)} }
+    .nav-logo { display:flex; align-items:center; }
+    .nav-logo .star-logo {
+      width: 58px;
+      height: 58px;
+      cursor: pointer;
+      display: block;
+      transition: width 0.4s, height 0.4s;
+    }
+    nav.scrolled .nav-logo .star-logo { width:44px; height:44px; }
 
-    .nav-links { display:flex; gap:2.2rem; list-style:none; }
+    .star-core  { animation: starPulse 5s ease-in-out infinite; transform-origin: center; }
+    .star-ray   { animation: rayFade  5s ease-in-out infinite; transform-origin: center; }
+    .star-ray2  { animation: rayFade  5s ease-in-out infinite 0.8s; transform-origin: center; }
+    .star-halo  { animation: haloGlow 5s ease-in-out infinite; transform-origin: center; }
+    .star-halo2 { animation: haloGlow 5s ease-in-out infinite 0.6s; transform-origin: center; }
+    @keyframes starPulse {
+      0%,100% { opacity:0.6; transform: scale(0.88); }
+      40%     { opacity:1;   transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(160,220,255,1)); }
+      60%     { opacity:1;   transform: scale(1.15); }
+    }
+    @keyframes rayFade {
+      0%,100% { opacity:0.4;  transform: scaleY(0.85); }
+      40%     { opacity:1;    transform: scaleY(1.1); }
+      60%     { opacity:0.95; transform: scaleY(1.08); }
+    }
+    @keyframes haloGlow {
+      0%,100% { opacity:0.2; transform: scale(0.85); }
+      40%     { opacity:1;   transform: scale(1.18); }
+      60%     { opacity:0.9; transform: scale(1.14); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
     .nav-links a {
-      text-decoration:none; font-family:'Cinzel',serif; font-size:0.72rem;
-      letter-spacing:0.18em; color:rgba(255,255,255,0.7); text-transform:uppercase;
-      position:relative; padding-bottom:3px; transition:color 0.3s;
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
     }
     .nav-links a::after {
-      content:''; position:absolute; bottom:0; left:0; width:0; height:1px;
-      background:linear-gradient(90deg,var(--sand),var(--ocean-light));
-      transition:width 0.4s;
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, var(--sand), var(--ocean-mid));
+      transition: width 0.4s ease;
     }
-    .nav-links a:hover, .nav-links a.active { color:white; }
-    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+    .nav-links a:hover { color: var(--ocean); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--ocean); }
 
-    /* ===== HERO VIDÉO ===== */
+    /* ===== HERO VIDÉO — 16:9 propre dans la zone de contenu Webador ===== */
     .hero {
       position:relative;
-      width:100vw; max-width:100vw;
-      margin-left:calc(50% - 50vw);
-      margin-right:calc(50% - 50vw);
-      height:100vh; min-height:580px; overflow:hidden;
+      width:100%;
+      aspect-ratio: 16 / 9;
+      min-height:400px;
+      max-height:100vh;
+      overflow:hidden;
       display:flex; align-items:center; justify-content:center;
     }
     .hero video {
@@ -85,10 +129,8 @@
       overflow:hidden; pointer-events:none; z-index:0;
     }
     .hero-video-bg iframe {
-      position:absolute; top:50%; left:50%;
-      transform:translate(-50%,-50%);
-      width:100vw; height:56.25vw;
-      min-height:100vh; min-width:177.78vh;
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
       border:0; pointer-events:none;
     }
     /* Vidéo récifs en 16:9 sans déformation */
@@ -509,6 +551,7 @@
     @media (max-width:900px) {
       nav { padding:0 1.5rem; }
       .nav-links { gap:1.2rem; }
+      .nav-links a { font-size:0.62rem; }
       .alt-section, .ifs-section { grid-template-columns:1fr; }
       .alt-section.reverse .alt-img { order:0; }
       .alt-img { height:50vw; min-height:260px; }
@@ -532,41 +575,50 @@
 </head>
 <body>
 
-  <!-- ===== NAV ===== -->
+  <!-- ===== NAV (identique page d'accueil) ===== -->
   <nav id="navbar">
-    <div class="nav-star">
-      <a href="houriya-accueil.html">
-        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+    <div class="nav-logo">
+      <a href="index.html#accueil">
+        <svg class="star-logo" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="bigHalo" cx="50%" cy="50%" r="50%">
               <stop offset="0%"   stop-color="#a8dcff" stop-opacity="0.7"/>
               <stop offset="35%"  stop-color="#5ab8ff" stop-opacity="0.35"/>
+              <stop offset="70%"  stop-color="#1a6aaa" stop-opacity="0.1"/>
               <stop offset="100%" stop-color="#0a2a44" stop-opacity="0"/>
             </radialGradient>
             <radialGradient id="midHalo" cx="50%" cy="50%" r="50%">
               <stop offset="0%"   stop-color="white"   stop-opacity="0.95"/>
+              <stop offset="30%"  stop-color="#c8eaff" stop-opacity="0.6"/>
               <stop offset="100%" stop-color="#4a9edd" stop-opacity="0"/>
             </radialGradient>
+            <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="rayGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="1.2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
           </defs>
           <circle class="star-halo"  cx="40" cy="40" r="38" fill="url(#bigHalo)"/>
           <circle class="star-halo2" cx="40" cy="40" r="20" fill="url(#midHalo)"/>
-          <polygon class="star-ray"  points="40,2 42.5,40 40,78 37.5,40" fill="white" opacity=".9"/>
-          <polygon class="star-ray"  points="2,40 40,37.5 78,40 40,42.5" fill="white" opacity=".9"/>
-          <polygon class="star-ray2" points="40,18 41.2,40 40,62 38.8,40" transform="rotate(45 40 40)" fill="white" opacity=".45"/>
-          <polygon class="star-ray2" points="40,18 41.2,40 40,62 38.8,40" transform="rotate(-45 40 40)" fill="white" opacity=".45"/>
-          <circle class="star-core"  cx="40" cy="40" r="5.5" fill="url(#midHalo)"/>
+          <polygon class="star-ray"  filter="url(#rayGlow)" points="40,2 42.5,40 40,78 37.5,40" fill="white" opacity="0.9"/>
+          <polygon class="star-ray"  filter="url(#rayGlow)" points="2,40 40,37.5 78,40 40,42.5" fill="white" opacity="0.9"/>
+          <polygon class="star-ray2" points="40,18 41.2,40 40,62 38.8,40" transform="rotate(45 40 40)" fill="white" opacity="0.45"/>
+          <polygon class="star-ray2" points="40,18 41.2,40 40,62 38.8,40" transform="rotate(-45 40 40)" fill="white" opacity="0.45"/>
+          <circle class="star-core"  cx="40" cy="40" r="5.5" fill="url(#midHalo)" filter="url(#softGlow)"/>
           <circle cx="40" cy="40" r="2.8" fill="white"/>
         </svg>
       </a>
     </div>
     <ul class="nav-links">
-      <li><a href="houriya-accueil.html">Accueil</a></li>
-      <li><a href="#" class="active">Univers Mer</a></li>
-      <li><a href="#sataya">Sataya</a></li>
-      <li><a href="#apnee">L'Apnée</a></li>
-      <li><a href="#alia">Alia Soul</a></li>
-      <li><a href="#tarifs">Séjours</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="index.html#accueil">ACCUEIL</a></li>
+      <li><a href="#" class="active">UNIVERS MER</a></li>
+      <li><a href="index.html#desert">UNIVERS DÉSERT</a></li>
+      <li><a href="index.html#sejours">NOS SÉJOURS</a></li>
+      <li><a href="index.html#approche">NOTRE APPROCHE &amp; QUI SOMMES NOUS</a></li>
+      <li><a href="index.html#contact">CONTACT</a></li>
     </ul>
   </nav>
 

@@ -123,15 +123,13 @@
     .nav-links a.active::after { width: 100%; }
     .nav-links a.active { color: var(--ocean); }
 
-    /* ===== HERO — DÉSERT ===== */
+    /* ===== HERO — vidéo en 16:9 propre dans la zone Webador ===== */
     .hero {
       position: relative;
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: calc(50% - 50vw);
-      margin-right: calc(50% - 50vw);
-      height: 100vh;
-      min-height: 600px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      min-height: 400px;
+      max-height: 100vh;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -148,13 +146,9 @@
     }
     .hero-video-bg iframe {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100vw;
-      height: 56.25vw;          /* 16:9 — hauteur basée sur largeur */
-      min-height: 100vh;
-      min-width: 177.78vh;      /* 16:9 — largeur basée sur hauteur */
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
       border: 0;
       pointer-events: none;
     }
